@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/splash">
+    app:startDestination="@id/main">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/main"
         android:name="com.karim.marveldemo.ui.main.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" >
@@ -16,15 +16,8 @@
     </fragment>
     <fragment
         android:id="@+id/details"
-        android:name="com.karim.marveldemo.ui.details.Details"
+        android:name="com.karim.marveldemo.ui.details.DetailsFragment"
         android:label="details_fragment"
         tools:layout="@layout/details_fragment" />
-    <fragment
-        android:id="@+id/splash"
-        android:name="com.karim.marveldemo.ui.splash.Splash"
-        android:label="Splash" >
-        <action
-            android:id="@+id/action_splash_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+
 </navigation>

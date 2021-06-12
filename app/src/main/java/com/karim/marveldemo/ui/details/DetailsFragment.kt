@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.karim.marveldemo.R
 
-class Details : Fragment() {
+class DetailsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Details()
+        fun newInstance() = DetailsFragment()
     }
 
     private lateinit var viewModel: DetailsViewModel
