@@ -1,12 +1,13 @@
 package com.karim.marveldemo.data
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @Entity
 @JsonClass(generateAdapter = true)
-data class CharacterData(
+data class CharactersData(
     @PrimaryKey
     @Json(name = "id")
     val id: Int,
@@ -14,23 +15,33 @@ data class CharacterData(
     val comics: Comics,
     @Json(name = "description")
     val description: String,
+    @Ignore
     @Json(name = "events")
     val events: Events,
+    @Ignore
     @Json(name = "modified")
     val modified: String,
     @Json(name = "name")
     val name: String,
     @Json(name = "resourceURI")
     val resourceURI: String,
+    @Ignore
     @Json(name = "series")
     val series: Series,
+    @Ignore
     @Json(name = "stories")
     val stories: Stories,
+    @Ignore
     @Json(name = "thumbnail")
     val thumbnail: Thumbnail,
+    @Ignore
     @Json(name = "urls")
     val urls: List<Url>
-)
+)  {
+    val thumbnailUrl
+        get()="${thumbnail.path}.${thumbnail.extension}"
+}
+
 
 @JsonClass(generateAdapter = true)
 data class Comics(
@@ -43,6 +54,7 @@ data class Comics(
     @Json(name = "returned")
     val returned: Int
 )
+
 
 @JsonClass(generateAdapter = true)
 data class Events(

@@ -5,12 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MarvelResponse(
-    @Json(name = "data")
-    val data: Data
-)
-
-@JsonClass(generateAdapter = true)
-data class Data(
     @Json(name = "count")
     val count: Int,
     @Json(name = "limit")
@@ -18,7 +12,7 @@ data class Data(
     @Json(name = "offset")
     val offset: Int,
     @Json(name = "results")
-    val results: List<CharacterData>,
+    val results: List<CharactersData>,
     @Json(name = "total")
     val total: Int
 )
