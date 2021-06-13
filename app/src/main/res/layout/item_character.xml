@@ -7,7 +7,7 @@
 
         <variable
             name="characterData"
-            type="com.karim.marveldemo.data.CharactersData" />
+            type="com.karim.marveldemo.data.CharacterData" />
 
     </data>
 
@@ -15,7 +15,9 @@
         android:id="@+id/transformationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
         app:transformation_duration="400">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"

@@ -11,7 +11,7 @@ abstract class LiveCoroutinesViewModel : BindingViewModel() {
 
     val disposables: CompositeDisposable = CompositeDisposable()
 
-    inline fun <T> launchOnViewModelScope(crossinline block: () -> Unit): LiveData<T> {
+    inline fun <T> launchOnViewModelScope(crossinline block: suspend () -> LiveData<T>): LiveData<T> {
         return liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emitSource(block())
         }

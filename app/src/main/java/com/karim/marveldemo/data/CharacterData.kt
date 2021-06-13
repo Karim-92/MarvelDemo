@@ -1,49 +1,50 @@
 package com.karim.marveldemo.data
+
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @Entity
 @JsonClass(generateAdapter = true)
-data class CharactersData(
+@Parcelize
+
+data class CharacterData(
     @PrimaryKey
     @Json(name = "id")
     val id: Int,
-    @Json(name = "comics")
-    val comics: Comics,
-    @Json(name = "description")
-    val description: String,
-    @Ignore
-    @Json(name = "events")
-    val events: Events,
-    @Ignore
-    @Json(name = "modified")
-    val modified: String,
     @Json(name = "name")
     val name: String,
+    @Json(name = "description")
+    val description: String,
+    @Json(name = "comics")
+    @Ignore val comics: Comics?,
+    @Json(name = "events")
+    @Ignore val events: Events?,
+    @Json(name = "modified")
+    @Ignore val modified: String,
     @Json(name = "resourceURI")
-    val resourceURI: String,
-    @Ignore
+    @Ignore val resourceURI: String,
     @Json(name = "series")
-    val series: Series,
-    @Ignore
+    @Ignore val series: Series?,
     @Json(name = "stories")
-    val stories: Stories,
-    @Ignore
+    @Ignore val stories: Stories?,
     @Json(name = "thumbnail")
-    val thumbnail: Thumbnail,
-    @Ignore
+    @Ignore val thumbnail: Thumbnail?,
     @Json(name = "urls")
-    val urls: List<Url>
-)  {
+    @Ignore val urls: List<Url>?
+) : Parcelable {
     val thumbnailUrl
-        get()="${thumbnail.path}.${thumbnail.extension}"
+        get() = "${thumbnail?.path}.${thumbnail?.extension}"
+    constructor (id: Int, name: String, description: String): this (0, "", "", null, null, "", "", null, null, null, null) {
+    }
 }
 
-
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Comics(
     @Json(name = "available")
     val available: Int,
@@ -53,10 +54,10 @@ data class Comics(
     val items: List<Item>,
     @Json(name = "returned")
     val returned: Int
-)
-
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Events(
     @Json(name = "available")
     val available: Int,
@@ -66,9 +67,10 @@ data class Events(
     val items: List<Item>,
     @Json(name = "returned")
     val returned: Int
-)
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Series(
     @Json(name = "available")
     val available: Int,
@@ -78,9 +80,10 @@ data class Series(
     val items: List<Item>,
     @Json(name = "returned")
     val returned: Int
-)
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Stories(
     @Json(name = "available")
     val available: Int,
@@ -90,30 +93,33 @@ data class Stories(
     val items: List<Item>,
     @Json(name = "returned")
     val returned: Int
-)
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Thumbnail(
     @Json(name = "extension")
     val extension: String,
     @Json(name = "path")
     val path: String
-)
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Url(
     @Json(name = "type")
     val type: String,
     @Json(name = "url")
     val url: String
-)
+) : Parcelable
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Item(
     @Json(name = "name")
     val name: String,
     @Json(name = "resourceURI")
     val resourceURI: String,
     @Json(name = "type")
-    val type: String
-)
+    val type: String?
+) : Parcelable

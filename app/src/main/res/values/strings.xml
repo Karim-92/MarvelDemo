@@ -8,4 +8,6 @@
     <string name="search">Search</string>
     <string name="character_image_placeholder">character image placeholder</string>
     <string name="character_name">Character Name</string>
+    <string name="character_parcelable">character</string>
+    <string name="trans_params">TransformationParams</string>
 </resources>

@@ -2,9 +2,9 @@ package com.karim.marveldemo.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.karim.marveldemo.data.CharactersData
+import com.karim.marveldemo.data.CharacterData
 
-@Database(entities = [CharactersData::class], version = 1, exportSchema = true)
+@Database(entities = [CharacterData::class], version = 1, exportSchema = false)
 abstract class CharactersDb : RoomDatabase() {
 
     abstract fun charactersDao() : CharactersDao

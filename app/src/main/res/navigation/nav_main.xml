@@ -18,6 +18,7 @@
         android:id="@+id/details"
         android:name="com.karim.marveldemo.ui.details.DetailsFragment"
         android:label="details_fragment"
-        tools:layout="@layout/details_fragment" />
+        tools:layout="@layout/details_fragment" >
+    </fragment>
 
 </navigation>
