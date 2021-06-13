@@ -7,7 +7,7 @@
 
         <variable
             name="characterData"
-            type="com.karim.marveldemo.data.CharacterData" />
+            type="com.karim.marveldemo.data.MarvelCharacter" />
 
     </data>
 
@@ -57,7 +57,7 @@
                     android:padding="12dp"
                     android:text="@{characterData.name}"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

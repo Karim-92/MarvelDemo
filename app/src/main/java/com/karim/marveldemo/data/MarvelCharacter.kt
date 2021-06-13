@@ -4,43 +4,55 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.karim.marveldemo.persistence.MarvelTypeConverters
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Entity
 @JsonClass(generateAdapter = true)
 @Parcelize
-
-data class CharacterData(
-    @PrimaryKey
+@TypeConverters(MarvelTypeConverters::class)
+data class MarvelCharacter(
+    var page: Int = 0,
     @Json(name = "id")
+    @PrimaryKey
     val id: Int,
     @Json(name = "name")
     val name: String,
     @Json(name = "description")
     val description: String,
-    @Json(name = "comics")
-    @Ignore val comics: Comics?,
-    @Json(name = "events")
-    @Ignore val events: Events?,
     @Json(name = "modified")
-    @Ignore val modified: String,
+    val modified: String,
     @Json(name = "resourceURI")
-    @Ignore val resourceURI: String,
-    @Json(name = "series")
-    @Ignore val series: Series?,
-    @Json(name = "stories")
-    @Ignore val stories: Stories?,
+    val resourceURI: String,
     @Json(name = "thumbnail")
-    @Ignore val thumbnail: Thumbnail?,
-    @Json(name = "urls")
-    @Ignore val urls: List<Url>?
+    val thumbnail: Thumbnail
 ) : Parcelable {
+    @Ignore
+    @IgnoredOnParcel
+    @Json(name = "comics")
+    val comics: Comics? = null
+    @Ignore
+    @IgnoredOnParcel
+    @Json(name = "events")
+    val events: Events? = null
+    @Ignore
+    @IgnoredOnParcel
+    @Json(name = "series")
+    val series: Series? = null
+    @Ignore
+    @IgnoredOnParcel
+    @Json(name = "stories")
+    val stories: Stories? = null
+    @Ignore
+    @IgnoredOnParcel
+    @Json(name = "urls")
+    val urls: List<Url> = emptyList()
     val thumbnailUrl
-        get() = "${thumbnail?.path}.${thumbnail?.extension}"
-    constructor (id: Int, name: String, description: String): this (0, "", "", null, null, "", "", null, null, null, null) {
-    }
+        get() = "${thumbnail.path}.${thumbnail.extension}"
 }
 
 @JsonClass(generateAdapter = true)
@@ -99,9 +111,9 @@ data class Stories(
 @Parcelize
 data class Thumbnail(
     @Json(name = "extension")
-    val extension: String,
+    var extension: String,
     @Json(name = "path")
-    val path: String
+    var path: String
 ) : Parcelable
 
 @JsonClass(generateAdapter = true)

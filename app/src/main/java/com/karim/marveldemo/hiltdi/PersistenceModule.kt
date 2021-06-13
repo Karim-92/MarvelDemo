@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.karim.marveldemo.persistence.CharactersDao
 import com.karim.marveldemo.persistence.CharactersDb
+import com.karim.marveldemo.persistence.MarvelTypeConverters
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -29,10 +30,12 @@ object PersistenceModule {
     @Singleton
     fun provideAppDatabase(
         application: Application,
+        typeConverters: MarvelTypeConverters
     ): CharactersDb {
         return Room
             .databaseBuilder(application, CharactersDb::class.java, "Pokedex.db")
             .fallbackToDestructiveMigration()
+            .addTypeConverter(typeConverters)
             .build()
     }
 

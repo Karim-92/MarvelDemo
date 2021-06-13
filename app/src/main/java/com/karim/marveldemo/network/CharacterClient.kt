@@ -1,6 +1,5 @@
 package com.karim.marveldemo.network
 
-import com.karim.marveldemo.PAGING_SIZE
 import com.karim.marveldemo.PRIV_API_KEY
 import com.karim.marveldemo.PUB_API_KEY
 import com.karim.marveldemo.data.MarvelResponse
@@ -16,15 +15,16 @@ class CharacterClient @Inject constructor(
     private val input: String = System.currentTimeMillis().toString()+ PRIV_API_KEY+ PUB_API_KEY
 
     suspend fun getRemoteMarvelCharacters(
-        paging: Int
+        page: Int
     ): ApiResponse<MarvelResponse> = characterService.getRemoteCharacters(
         limit = PAGING_SIZE,
-        offset = paging * PAGING_SIZE,
+        offset = page * PAGING_SIZE,
         timeStamp = time,
         hash = getHash(input)
     )
 
     companion object {
+        private const val PAGING_SIZE = 10
 
         fun getHash(msg: String): String {
             val md =  MessageDigest.getInstance("MD5")

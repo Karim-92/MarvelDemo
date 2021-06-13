@@ -1,60 +1,51 @@
 package com.karim.marveldemo.repository
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.MutableLiveData
-import com.karim.marveldemo.data.CharacterData
 import com.karim.marveldemo.network.CharacterClient
 import com.karim.marveldemo.persistence.CharactersDao
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnSuccess
 import com.skydoves.whatif.whatIfNotNull
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val characterClient: CharacterClient,
-    private val charactersDao : CharactersDao) : Repository{
-    private lateinit var characters : List<CharacterData>
-    val liveData = MutableLiveData<List<CharacterData>>()
-
-
-    init{
-        Timber.d("Main repository Injected")
-        CoroutineScope(Dispatchers.IO).launch{
-            val characters=charactersDao.getAllCharactersFromDb()
-            if(characters.isEmpty()) {
-                getMarvelCharacters()
-            }else{
-                liveData.postValue(characters)
-            }
-        }
-    }
+    private val charactersDao: CharactersDao
+) : Repository {
 
     @WorkerThread
-    suspend fun getMarvelCharacters(
-    ) = withContext(Dispatchers.IO) {
-            val response = characterClient.getRemoteMarvelCharacters(0)
-            Timber.d("Called from webservice")
-            response
-                .onSuccess {
-                this.response.body().whatIfNotNull {
-                    characters= this.response.body()!!.data.results
-                    liveData.postValue(characters)
-                    charactersDao.insertCharactersList(characters)
-                    Timber.d("Call result: ${characters.toString()}")
-                }
-            }.onError {
+    fun getMarvelCharacters(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: () -> Unit
+    ) =
+        flow {
+            var characters = charactersDao.getAllCharactersFromDb(page)
+            if (characters.isEmpty()) {
+                val response = characterClient.getRemoteMarvelCharacters(page = page)
+                response.suspendOnSuccess {
+                    data.whatIfNotNull { response ->
+                        characters=response.data.results
+                        characters.forEach { character -> character.page = page }
+                        charactersDao.insertCharactersList(characters)
+                        emit(charactersDao.getAllCharactersList(page))
+                    }
+                }.onError {
+                    error(message())
+                }.onException {
                     error(message())
                 }
-                .onException {
-                    error(message())
-                }
-        liveData.apply { postValue(characters) }
-    }
+            } else {
+                emit(charactersDao.getAllCharactersList(page))
+            }
+        }.onStart { onStart }.onCompletion { onComplete }.flowOn(Dispatchers.IO)
+
 }

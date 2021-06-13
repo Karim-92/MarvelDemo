@@ -34,7 +34,6 @@
     }
     buildFeatures {
         dataBinding true
-        viewBinding true
     }
     lintOptions {
         abortOnError false

@@ -14,6 +14,7 @@ interface CharacterService {
         @Query("offset") offset: Int = 0,
         @Query("apikey") apiKey: String= PUB_API_KEY,
         @Query("ts") timeStamp: String,
-        @Query("hash") hash: String
+        @Query("hash") hash: String,
+        @Query("orderBy") orderBy: String="name"
     ): ApiResponse<MarvelResponse>
 }

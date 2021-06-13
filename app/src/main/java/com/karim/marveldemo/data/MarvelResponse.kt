@@ -5,7 +5,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
-
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class MarvelResponse(
@@ -35,7 +34,7 @@ data class Data(
     @Json(name = "offset")
     val offset: Int,
     @Json(name = "results")
-    val results: List<CharacterData>,
+    val results: List<MarvelCharacter>,
     @Json(name = "total")
     val total: Int
 ) : Parcelable
