@@ -33,7 +33,7 @@ object RecyclerViewBinding {
             loadMore = { viewModel.getNextCharacterList() },
             onLast = { false }
         ).run {
-            threshold = 8
+            threshold = 10
         }
     }
 }

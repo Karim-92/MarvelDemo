@@ -11,6 +11,7 @@
     <color name="background">#141414</color>
     <color name="textviewBackground">#E65f5f5f</color>
     <color name="blue">#1D43B3</color>
+    <color name="textColor">#ff898e</color>
 
 
 </resources>

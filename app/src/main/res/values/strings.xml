@@ -11,4 +11,10 @@
     <string name="character_parcelable">character</string>
     <string name="trans_params">TransformationParams</string>
     <string name="error_data_retrieval">An error has occurred while retrieving data.</string>
+    <string name="description">Description</string>
+    <string name="dummy_description">Rick Jones has been Hulk\'s best bud since day one, but now he\'s more than a friend...he\'s a teammate! Transformed by a Gamma energy explosion, A-Bomb\'s thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction!</string>
+    <string name="comics">Comics</string>
+    <string name="events">Events</string>
+    <string name="series">Series</string>
+    <string name="stories">Stories</string>
 </resources>

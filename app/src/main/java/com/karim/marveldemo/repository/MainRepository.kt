@@ -46,6 +46,6 @@ class MainRepository @Inject constructor(
             } else {
                 emit(charactersDao.getAllCharactersList(page))
             }
-        }.onStart { onStart }.onCompletion { onComplete }.flowOn(Dispatchers.IO)
+        }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
 }

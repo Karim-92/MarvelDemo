@@ -7,4 +7,13 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.CardView" parent="">
+        <item name="backgroundColor">@color/colorPrimary</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeBottomLeft">7%</item>
+        <item name="cornerSizeBottomRight">7%</item>
+    </style>
+
 </resources>
