@@ -20,26 +20,29 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository,
     private val savedStateHandle: SavedStateHandle
-) : BindingViewModel(){
+) : BindingViewModel() {
+
     @get:Bindable
     var isLoading: Boolean by bindingProperty(false)
         private set
 
-
-    private val characterIndex : MutableStateFlow<Int> = MutableStateFlow(0)
+    private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
     private val characterListFlow = characterIndex.flatMapLatest { page ->
         mainRepository.getMarvelCharacters(
-            page=page,
-            onStart = {isLoading =true},
-            onComplete = {isLoading = false},
-            onError = {Timber.d("Error has occurred while retrieving data from repo to viewmodel.")}
+            page = page,
+            onStart = { isLoading = true },
+            onComplete = { isLoading = false },
+            onError = { Timber.d("Error has occurred while retrieving data from repo to viewmodel.") }
         )
     }
 
     @ExperimentalCoroutinesApi
     @get:Bindable
-    val characterData: List<MarvelCharacter> by characterListFlow.asBindingProperty(viewModelScope, emptyList())
+    val characterData: List<MarvelCharacter> by characterListFlow.asBindingProperty(
+        viewModelScope,
+        emptyList()
+    )
 
     init {
         Timber.d("init MainViewModel")

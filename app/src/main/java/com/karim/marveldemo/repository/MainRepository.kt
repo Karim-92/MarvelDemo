@@ -1,9 +1,10 @@
 package com.karim.marveldemo.repository
 
 import androidx.annotation.WorkerThread
+import com.karim.marveldemo.mapper.ErrorResponseMapper
 import com.karim.marveldemo.network.CharacterClient
 import com.karim.marveldemo.persistence.CharactersDao
-import com.skydoves.sandwich.message
+import com.skydoves.sandwich.map
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -25,7 +26,7 @@ class MainRepository @Inject constructor(
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: () -> Unit
+        onError: (String?) -> Unit
     ) =
         flow {
             var characters = charactersDao.getAllCharactersFromDb(page)
@@ -39,10 +40,8 @@ class MainRepository @Inject constructor(
                         emit(charactersDao.getAllCharactersList(page))
                     }
                 }.onError {
-                    error(message())
-                }.onException {
-                    error(message())
-                }
+                    map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
+                }.onException { onError(message) }
             } else {
                 emit(charactersDao.getAllCharactersList(page))
             }

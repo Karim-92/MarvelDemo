@@ -44,5 +44,4 @@ object PersistenceModule {
     fun provideCharactersDao(charactersDb: CharactersDb): CharactersDao {
         return charactersDb.charactersDao()
     }
-
 }

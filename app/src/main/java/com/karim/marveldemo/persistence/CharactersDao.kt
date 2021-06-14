@@ -12,9 +12,15 @@ interface CharactersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharactersList(characters: List<MarvelCharacter>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCharacter(character: MarvelCharacter)
+
     @Query("SELECT * FROM MarvelCharacter WHERE page=:page_ ORDER BY Name ASC")
     fun getAllCharactersFromDb(page_: Int): List<MarvelCharacter>
 
     @Query("SELECT * FROM MarvelCharacter WHERE page <= :page_ ORDER BY Name ASC")
     suspend fun getAllCharactersList(page_: Int): List<MarvelCharacter>
+
+    @Query("SELECT * FROM MarvelCharacter WHERE id = :characterId_")
+    suspend fun getCharacterData(characterId_ : Int): MarvelCharacter?
 }

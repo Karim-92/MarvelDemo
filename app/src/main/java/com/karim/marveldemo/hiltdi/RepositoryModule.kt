@@ -2,6 +2,7 @@ package com.karim.marveldemo.hiltdi
 
 import com.karim.marveldemo.network.CharacterClient
 import com.karim.marveldemo.persistence.CharactersDao
+import com.karim.marveldemo.repository.DetailsRepository
 import com.karim.marveldemo.repository.MainRepository
 import dagger.Module
 import dagger.Provides
@@ -21,6 +22,15 @@ object RepositoryModule {
         charactersDao: CharactersDao
     ): MainRepository {
         return MainRepository(characterClient, charactersDao)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideDetailsRepository(
+        characterClient: CharacterClient,
+        charactersDao: CharactersDao
+    ): DetailsRepository {
+        return DetailsRepository(characterClient, charactersDao)
     }
 
 }

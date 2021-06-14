@@ -91,14 +91,14 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.3.0'
     kapt 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.5"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "com.github.skydoves:whatif:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "com.github.skydoves:baserecyclerviewadapter:1.0.4"
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.startup:startup-runtime:1.0.0'
+    implementation "com.github.skydoves:bundler:1.0.4"
+
 
     // Test Libraries
     testImplementation 'junit:junit:4.13.2.'

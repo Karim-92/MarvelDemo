@@ -12,7 +12,7 @@ class CharacterClient @Inject constructor(
     private val characterService: CharacterService
 ) {
     private val time: String = System.currentTimeMillis().toString()
-    private val input: String = System.currentTimeMillis().toString()+ PRIV_API_KEY+ PUB_API_KEY
+    private val input: String = System.currentTimeMillis().toString() + PRIV_API_KEY + PUB_API_KEY
 
     suspend fun getRemoteMarvelCharacters(
         page: Int
@@ -23,11 +23,20 @@ class CharacterClient @Inject constructor(
         hash = getHash(input)
     )
 
+    suspend fun getRemoteCharacterData(
+        characterId: Int
+    ): ApiResponse<MarvelResponse> =
+        characterService.getRemoteCharacterData(
+            characterId = characterId,
+            timeStamp = time,
+            hash = getHash(input)
+        )
+
     companion object {
         private const val PAGING_SIZE = 10
 
         fun getHash(msg: String): String {
-            val md =  MessageDigest.getInstance("MD5")
+            val md = MessageDigest.getInstance("MD5")
             return BigInteger(1, md.digest(msg.toByteArray())).toString(16).padStart(32, '0')
         }
     }

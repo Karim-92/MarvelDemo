@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.karim.marveldemo.R
 import com.karim.marveldemo.data.MarvelCharacter
 import com.karim.marveldemo.databinding.ItemCharacterBinding
+import com.karim.marveldemo.ui.details.DetailsActivity
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.bindables.binding
-import timber.log.Timber
 
 class MainRecyclerAdapter() :
     BindingListAdapter<MarvelCharacter, MainRecyclerAdapter.CharacterViewHolder>(diffUtil) {
@@ -25,12 +25,10 @@ class MainRecyclerAdapter() :
                     bindingAdapterPosition.takeIf { it != NO_POSITION } ?: return@setOnClickListener
                 val currentClickedAt = SystemClock.elapsedRealtime()
                 if (currentClickedAt - onClickedAt > binding.transformationLayout.duration) {
-//                    val detailsFrag = DetailsFragment()
-//                    detailsFrag.startDetailsFragment(
-//                        binding.transformationLayout,
-//                        getItem(position)
-//                    )
-                    Timber.d("Character Name: ${getItem(position).name}, Character Properties: ${getItem(position)}")
+                    DetailsActivity.startActivity(
+                        binding.transformationLayout,
+                        getItem(position)
+                    )
                     onClickedAt = currentClickedAt
                 }
             }
@@ -48,11 +46,13 @@ class MainRecyclerAdapter() :
     class CharacterViewHolder(val binding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<MarvelCharacter>() {
 
-            override fun areItemsTheSame(oldItem: MarvelCharacter, newItem: MarvelCharacter): Boolean =
+            override fun areItemsTheSame(
+                oldItem: MarvelCharacter,
+                newItem: MarvelCharacter
+            ): Boolean =
                 oldItem.name == newItem.name
 
             override fun areContentsTheSame(
