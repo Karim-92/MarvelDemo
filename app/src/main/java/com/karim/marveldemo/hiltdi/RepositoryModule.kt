@@ -32,5 +32,4 @@ object RepositoryModule {
     ): DetailsRepository {
         return DetailsRepository(characterClient, charactersDao)
     }
-
 }

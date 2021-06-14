@@ -44,4 +44,10 @@ object PersistenceModule {
     fun provideCharactersDao(charactersDb: CharactersDb): CharactersDao {
         return charactersDb.charactersDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideMarvelTypeConverters(moshi: Moshi): MarvelTypeConverters {
+        return MarvelTypeConverters(moshi)
+    }
 }
