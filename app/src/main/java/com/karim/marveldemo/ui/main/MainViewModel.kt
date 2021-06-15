@@ -22,15 +22,18 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BindingViewModel() {
 
+    private var queryString: String?=null
+
     @get:Bindable
     var isLoading: Boolean by bindingProperty(false)
         private set
 
     private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
-    private val characterListFlow = characterIndex.flatMapLatest { page ->
+    private var characterListFlow = characterIndex.flatMapLatest { page ->
         mainRepository.getMarvelCharacters(
             page = page,
+            query = queryString,
             onStart = { isLoading = true },
             onComplete = { isLoading = false },
             onError = { Timber.d("Error has occurred while retrieving data from repo to viewmodel.") }
@@ -54,4 +57,10 @@ class MainViewModel @Inject constructor(
             characterIndex.value++
         }
     }
+
+    fun onQuery(query: String): Boolean {
+        TODO("Implement query fetching")
+        return true
+    }
+
 }

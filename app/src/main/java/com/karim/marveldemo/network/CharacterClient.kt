@@ -15,10 +15,12 @@ class CharacterClient @Inject constructor(
     private val input: String = System.currentTimeMillis().toString() + PRIV_API_KEY + PUB_API_KEY
 
     suspend fun getRemoteMarvelCharacters(
-        page: Int
+        page: Int,
+        query: String?=null
     ): ApiResponse<MarvelResponse> = characterService.getRemoteCharacters(
         limit = PAGING_SIZE,
         offset = page * PAGING_SIZE,
+        nameString=query,
         timeStamp = time,
         hash = getHash(input)
     )

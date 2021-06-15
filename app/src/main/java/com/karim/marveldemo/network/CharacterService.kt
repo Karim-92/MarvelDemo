@@ -14,16 +14,18 @@ interface CharacterService {
         @Query("limit") limit: Int = 10,
         @Query("offset") offset: Int = 0,
         @Query("apikey") apiKey: String = PUB_API_KEY,
+        @Query("nameStartsWith") nameString: String? =null,
         @Query("ts") timeStamp: String,
         @Query("hash") hash: String,
         @Query("orderBy") orderBy: String = "name"
     ): ApiResponse<MarvelResponse>
 
-    @GET("GET /v1/public/characters/{characterId}")
+    @GET("/v1/public/characters/{characterId}")
     suspend fun getRemoteCharacterData(
         @Path("characterId") characterId: Int,
         @Query("apikey") apiKey: String = PUB_API_KEY,
         @Query("ts") timeStamp: String,
         @Query("hash") hash: String,
     ): ApiResponse<MarvelResponse>
+
 }

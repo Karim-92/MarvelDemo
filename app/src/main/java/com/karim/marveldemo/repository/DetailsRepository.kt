@@ -1,7 +1,6 @@
 package com.karim.marveldemo.repository
 
 import androidx.annotation.WorkerThread
-import com.karim.marveldemo.data.MarvelCharacter
 import com.karim.marveldemo.mapper.ErrorResponseMapper
 import com.karim.marveldemo.network.CharacterClient
 import com.karim.marveldemo.persistence.CharactersDao
@@ -20,7 +19,7 @@ class DetailsRepository @Inject constructor(
 
     @WorkerThread
     fun getCharacterData(characterId: Int, onComplete: () -> Unit, onError: (String?) -> Unit) =
-        flow<MarvelCharacter> {
+        flow{
             var marvelCharacter = charactersDao.getCharacterData(characterId)
             if (marvelCharacter == null) {
                 val response = characterClient.getRemoteCharacterData(characterId)
@@ -39,7 +38,7 @@ class DetailsRepository @Inject constructor(
                     // e.g., network connection error.
                     .onException { onError(message) }
             } else {
-                emit(marvelCharacter!!)
+                emit(marvelCharacter)
             }
         }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 }

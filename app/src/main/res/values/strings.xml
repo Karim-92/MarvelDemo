@@ -16,4 +16,6 @@
     <string name="events">Events</string>
     <string name="series">Series</string>
     <string name="stories">Stories</string>
+    <string name="search_characters">Search Characters</string>
+    <string name="character_image">Character Image</string>
 </resources>

@@ -15,6 +15,9 @@ interface CharactersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacter(character: MarvelCharacter)
 
+    @Query("SELECT * FROM MarvelCharacter WHERE name LIKE :query ORDER BY Name ASC")
+    fun getQueryCharacters(query: String): List<MarvelCharacter>
+
     @Query("SELECT * FROM MarvelCharacter WHERE page=:page_ ORDER BY Name ASC")
     fun getAllCharactersFromDb(page_: Int): List<MarvelCharacter>
 

@@ -24,14 +24,15 @@ class MainRepository @Inject constructor(
     @WorkerThread
     fun getMarvelCharacters(
         page: Int,
+        query: String?,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
     ) =
         flow {
-            var characters = charactersDao.getAllCharactersFromDb(page)
+            var characters = if(query==null) charactersDao.getAllCharactersFromDb(page) else charactersDao.getQueryCharacters(query)
             if (characters.isEmpty()) {
-                val response = characterClient.getRemoteMarvelCharacters(page = page)
+                val response = if(query==null)characterClient.getRemoteMarvelCharacters(page = page) else characterClient.getRemoteMarvelCharacters(page = page, query)
                 response.suspendOnSuccess {
                     data.whatIfNotNull { response ->
                         characters=response.data.results

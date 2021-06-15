@@ -15,8 +15,9 @@
         android:id="@+id/transformationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:transformation_pathMode="arc"
         android:layout_marginBottom="25dp"
-        app:transformation_duration="400">
+        app:transformation_duration="600">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
