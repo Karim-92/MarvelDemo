@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.karim.marveldemo.data.Item" />
+            type="com.karim.marveldemo.data.GenericResource" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +55,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:text="@{item.name}"
+                    android:text=""
                     app:layout_constraintBottom_toBottomOf="@+id/item_poster_post"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository,
@@ -36,16 +37,20 @@ class MainViewModel @Inject constructor(
             query = queryString,
             onStart = { isLoading = true },
             onComplete = { isLoading = false },
-            onError = { Timber.d("Error has occurred while retrieving data from repo to viewmodel.") }
+            onError = { Timber.d(" Error Message: $it" ) }
         )
     }
 
-    @ExperimentalCoroutinesApi
     @get:Bindable
     val characterData: List<MarvelCharacter> by characterListFlow.asBindingProperty(
         viewModelScope,
         emptyList()
     )
+
+    @get:Bindable
+    var toastMessage: String? by bindingProperty(null)
+        private set
+
 
     init {
         Timber.d("init MainViewModel")
@@ -59,7 +64,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onQuery(query: String): Boolean {
-        TODO("Implement query fetching")
+//        TODO("Implement query fetching")
         return true
     }
 

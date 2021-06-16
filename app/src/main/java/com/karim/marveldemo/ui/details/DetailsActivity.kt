@@ -13,6 +13,7 @@ import com.skydoves.bundler.intentOf
 import com.skydoves.transformationlayout.TransformationCompat
 import com.skydoves.transformationlayout.TransformationLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class DetailsActivity : BindingActivity<ActivityDetailsBinding>(R.layout.activit
             marvelCharacter=marvelCharacterItem
             vm = viewModel
         }
+        Timber.d("Viewmodel values: ${viewModel.characterData.toString()}")
     }
     companion object {
         fun startActivity(

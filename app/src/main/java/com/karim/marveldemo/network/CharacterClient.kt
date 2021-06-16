@@ -2,6 +2,7 @@ package com.karim.marveldemo.network
 
 import com.karim.marveldemo.PRIV_API_KEY
 import com.karim.marveldemo.PUB_API_KEY
+import com.karim.marveldemo.data.GenericResponse
 import com.karim.marveldemo.data.MarvelResponse
 import com.skydoves.sandwich.ApiResponse
 import java.math.BigInteger
@@ -25,10 +26,37 @@ class CharacterClient @Inject constructor(
         hash = getHash(input)
     )
 
-    suspend fun getRemoteCharacterData(
+    suspend fun getRemoteEvents(
         characterId: Int
-    ): ApiResponse<MarvelResponse> =
-        characterService.getRemoteCharacterData(
+    ): ApiResponse<GenericResponse> =
+        characterService.getRemoteEvents(
+            characterId = characterId,
+            timeStamp = time,
+            hash = getHash(input)
+        )
+
+    suspend fun getRemoteComics(
+        characterId: Int
+    ): ApiResponse<GenericResponse> =
+        characterService.getRemoteComics(
+            characterId = characterId,
+            timeStamp = time,
+            hash = getHash(input)
+        )
+
+    suspend fun getRemoteStories(
+        characterId: Int
+    ): ApiResponse<GenericResponse> =
+        characterService.getRemoteStories(
+            characterId = characterId,
+            timeStamp = time,
+            hash = getHash(input)
+        )
+
+    suspend fun getRemoteSeries(
+        characterId: Int
+    ): ApiResponse<GenericResponse> =
+        characterService.getRemoteSeries(
             characterId = characterId,
             timeStamp = time,
             hash = getHash(input)

@@ -42,7 +42,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             override fun onQueryTextChange(newText: String): Boolean {
                 Timber.d("Query Changed")
-                viewModel.onQuery(newText)
+//                viewModel.onQuery(newText)
                 return true
             }
         })

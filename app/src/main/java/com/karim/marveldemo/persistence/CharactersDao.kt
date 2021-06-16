@@ -25,7 +25,7 @@ interface CharactersDao {
     suspend fun getAllCharactersList(page_: Int): List<MarvelCharacter>
 
     @Query("SELECT * FROM MarvelCharacter WHERE id = :characterId_")
-    suspend fun getCharacterData(characterId_ : Int): MarvelCharacter?
+    suspend fun getCharacterData(characterId_ : Int): MarvelCharacter
 
     @Query("DELETE FROM MarvelCharacter")
     suspend fun deleteAllCharacters()

@@ -1,12 +1,10 @@
 package com.karim.marveldemo.data
 
-import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
-@Parcelize
+
 data class MarvelResponse(
     @Json(name = "attributionHTML")
     val attributionHTML: String,
@@ -22,10 +20,9 @@ data class MarvelResponse(
     val etag: String,
     @Json(name = "status")
     val status: String
-) : Parcelable
+)
 
 @JsonClass(generateAdapter = true)
-@Parcelize
 data class Data(
     @Json(name = "count")
     val count: Int,
@@ -37,4 +34,4 @@ data class Data(
     val results: List<MarvelCharacter>,
     @Json(name = "total")
     val total: Int
-) : Parcelable
+)
