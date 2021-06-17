@@ -41,7 +41,7 @@
                     android:layout_margin="3dp"
                     android:layout_marginBottom="16dp"
                     android:scaleType="centerCrop"
-                    app:characterImage="@{characterData.thumbnailUrl}"
+                    app:resourceImage="@{characterData.thumbnailUrl}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

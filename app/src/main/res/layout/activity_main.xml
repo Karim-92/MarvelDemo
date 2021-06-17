@@ -63,7 +63,7 @@
             android:scrollbars="vertical"
             app:adapter="@{adapter}"
             app:paginationCharacterList="@{vm}"
-            app:submitList="@{vm.characterData}"
+            app:characterList="@{vm.characterData}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

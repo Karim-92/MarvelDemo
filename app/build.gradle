@@ -99,6 +99,10 @@ dependencies {
     implementation 'androidx.startup:startup-runtime:1.0.0'
     implementation "com.github.skydoves:bundler:1.0.4"
     implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-beta02'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.10"
+    implementation 'com.yarolegovich:discrete-scrollview:1.5.1'
+
+
 
 
 

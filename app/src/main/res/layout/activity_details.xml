@@ -4,81 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.text.TextUtils"/>
+
         <variable
             name="marvelCharacter"
-            type="com.karim.marveldemo.data.MarvelCharacter"/>
+            type="com.karim.marveldemo.data.MarvelCharacter" />
+
         <variable
             name="vm"
             type="com.karim.marveldemo.ui.details.DetailsViewModel" />
+
         <variable
             name="comicsAdapter"
-            type="com.karim.marveldemo.ui.adapters.ComicsAdapter" />
+            type="com.karim.marveldemo.ui.adapters.GenericAdapter" />
+
         <variable
             name="eventsAdapter"
-            type="com.karim.marveldemo.ui.adapters.EventsAdapter" />
+            type="com.karim.marveldemo.ui.adapters.GenericAdapter" />
+
         <variable
             name="seriesAdapter"
-            type="com.karim.marveldemo.ui.adapters.SeriesAdapter" />
+            type="com.karim.marveldemo.ui.adapters.GenericAdapter" />
+
         <variable
             name="storiesAdapter"
-            type="com.karim.marveldemo.ui.adapters.StoriesAdapter" />
+            type="com.karim.marveldemo.ui.adapters.GenericAdapter" />
     </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary">
 
-                <androidx.appcompat.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
 
-                    android:id="@+id/details_toolbar"
+                android:id="@+id/details_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/app_bar_rectangle"
+                app:contentInsetStart="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@drawable/app_bar_rectangle"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:contentInsetStart="0dp">
+                    android:layout_height="match_parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/headerImg"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="00dp"
+                        android:cropToPadding="true"
+                        android:scaleType="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:resourceImage="@{marvelCharacter.thumbnailUrl}"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView"
+                        tools:src="@drawable/testimage" />
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/headerImg"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="00dp"
-                            android:scaleType="centerCrop"
-                            app:characterImage="@{marvelCharacter.thumbnailUrl}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView"
-                            tools:src="@drawable/testimage" />
-
-<!--                        <Button-->
-<!--                            android:id="@+id/backBtn"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="30dp"-->
-<!--                            android:layout_marginTop="24dp"-->
-<!--                            android:alpha="0.35"-->
-<!--                            android:background="@drawable/backbutton_shape"-->
-<!--                            android:drawableEnd="@drawable/ic_back"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.appcompat.widget.Toolbar>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -115,7 +112,7 @@
                 android:id="@+id/description_vh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/description"
                 android:textColor="@color/textColor"
@@ -131,9 +128,9 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:text="@{TextUtils.isEmpty(marvelCharacter.description)?@string/description_empty : marvelCharacter.description}"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:text="@{marvelCharacter.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_vh"
@@ -144,7 +141,7 @@
                 android:id="@+id/comics_vh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/comics"
                 android:textColor="@color/textColor"
@@ -154,23 +151,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/desc_tv" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/comics_rv"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:minHeight="100dp"
                 android:scrollbars="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:adapter="@{comicsAdapter}"
+                app:dsv_orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/comics_vh" />
+                app:layout_constraintTop_toBottomOf="@+id/comics_vh"
+                app:resourceList="@{vm.characterData.comics}"
+                tools:listitem="@layout/item_generic" />
 
             <TextView
                 android:id="@+id/events_vh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/events"
                 android:textColor="@color/textColor"
@@ -179,23 +179,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/comics_rv" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/events_rv"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:minHeight="100dp"
                 android:scrollbars="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:adapter="@{eventsAdapter}"
+                app:dsv_orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/events_vh" />
+                app:layout_constraintTop_toBottomOf="@+id/events_vh"
+                app:resourceList="@{vm.characterData.events}"
+                tools:listitem="@layout/item_generic" />
 
             <TextView
                 android:id="@+id/series_vh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/series"
                 android:textColor="@color/textColor"
@@ -204,23 +207,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/events_rv" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/series_rv"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:minHeight="100dp"
                 android:scrollbars="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:adapter="@{seriesAdapter}"
+                app:dsv_orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/series_vh" />
+                app:layout_constraintTop_toBottomOf="@+id/series_vh"
+                app:resourceList="@{vm.characterData.series}"
+                tools:listitem="@layout/item_generic" />
 
             <TextView
                 android:id="@+id/stories_vh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/stories"
                 android:textColor="@color/textColor"
@@ -229,17 +235,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/series_rv" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/stories_rv"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:minHeight="100dp"
                 android:scrollbars="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:adapter="@{storiesAdapter}"
+                app:dsv_orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stories_vh" />
+                app:layout_constraintTop_toBottomOf="@+id/stories_vh"
+                app:resourceList="@{vm.characterData.stories}"
+                tools:listitem="@layout/item_generic" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

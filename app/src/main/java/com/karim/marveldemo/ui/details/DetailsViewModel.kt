@@ -4,7 +4,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.karim.marveldemo.data.MarvelCharacter
+import com.karim.marveldemo.data.MarvelCharacterDTO
 import com.karim.marveldemo.repository.DetailsRepository
 import com.skydoves.bindables.BindingViewModel
 import com.skydoves.bindables.asBindingProperty
@@ -26,12 +26,12 @@ class DetailsViewModel  @AssistedInject constructor(
         detailRepository.getCharacterData(
             characterId = characterId,
             onComplete = { isLoading = false },
-            onError = { Timber.d("Error has occurred while retrieving data from repo to viewmodel.") }
+            onError = {  Timber.d(" Error Message: $it" ) }
         )
     }
 
     @get:Bindable
-    val characterData: MarvelCharacter? by characterInfoFlow.asBindingProperty(viewModelScope, null)
+    val characterData: MarvelCharacterDTO? by characterInfoFlow.asBindingProperty(viewModelScope, null)
 
     @get:Bindable
     var isLoading: Boolean by bindingProperty(false)

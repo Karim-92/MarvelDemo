@@ -7,13 +7,13 @@ import com.karim.marveldemo.R
 import com.karim.marveldemo.data.MarvelCharacter
 import com.karim.marveldemo.databinding.ActivityDetailsBinding
 import com.karim.marveldemo.extensions.onTransformationEndContainerApplyParams
+import com.karim.marveldemo.ui.adapters.GenericAdapter
 import com.skydoves.bindables.BindingActivity
 import com.skydoves.bundler.bundleNonNull
 import com.skydoves.bundler.intentOf
 import com.skydoves.transformationlayout.TransformationCompat
 import com.skydoves.transformationlayout.TransformationLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,7 +22,7 @@ class DetailsActivity : BindingActivity<ActivityDetailsBinding>(R.layout.activit
     @Inject
     lateinit var detailViewModelFactory: DetailsViewModel.AssistedFactory
 
-    val viewModel: DetailsViewModel by viewModels{
+    val viewModel: DetailsViewModel by viewModels {
         DetailsViewModel.provideFactory(detailViewModelFactory, marvelCharacterItem.id)
     }
 
@@ -31,13 +31,17 @@ class DetailsActivity : BindingActivity<ActivityDetailsBinding>(R.layout.activit
     override fun onCreate(savedInstanceState: Bundle?) {
         onTransformationEndContainerApplyParams()
         super.onCreate(savedInstanceState)
-        binding{
+        binding {
             lifecycleOwner = this@DetailsActivity
-            marvelCharacter=marvelCharacterItem
+            marvelCharacter = marvelCharacterItem
+            comicsAdapter = GenericAdapter()
+            eventsAdapter = GenericAdapter()
+            storiesAdapter = GenericAdapter()
+            seriesAdapter = GenericAdapter()
             vm = viewModel
         }
-        Timber.d("Viewmodel values: ${viewModel.characterData.toString()}")
     }
+
     companion object {
         fun startActivity(
             transformationLayout: TransformationLayout,

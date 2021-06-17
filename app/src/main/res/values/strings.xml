@@ -18,4 +18,5 @@
     <string name="stories">Stories</string>
     <string name="search_characters">Search Characters</string>
     <string name="character_image">Character Image</string>
+    <string name="description_empty">A description for this character has not been provided.</string>
 </resources>

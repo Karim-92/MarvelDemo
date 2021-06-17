@@ -6,6 +6,9 @@ import com.karim.marveldemo.ui.main.MainViewModel
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.whatif.whatIfNotNullAs
+import com.yarolegovich.discretescrollview.DiscreteScrollView
+import com.yarolegovich.discretescrollview.transform.Pivot
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 
 object RecyclerViewBinding {
     @JvmStatic
@@ -17,10 +20,29 @@ object RecyclerViewBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("submitList")
-    fun bindSubmitList(view: RecyclerView, itemList: List<Any>?) {
+    @BindingAdapter("characterList")
+    fun bindCharacterList(view: RecyclerView, itemList: List<Any>?) {
         view.adapter.whatIfNotNullAs<BindingListAdapter<Any, *>> { adapter ->
             adapter.submitList(itemList)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("resourceList")
+    fun bindResourceList(view: DiscreteScrollView, itemList: List<Any>?) {
+        view.adapter.whatIfNotNullAs<BindingListAdapter<Any, *>> { adapter ->
+            adapter.submitList(itemList)
+        }
+        view.apply {
+            setSlideOnFling(true)
+            setSlideOnFlingThreshold(500)
+            setItemTransformer(
+                ScaleTransformer.Builder()
+                    .setMaxScale(1.1f)
+                    .setMinScale(0.8f)
+                    .setPivotX(Pivot.X.LEFT)
+                    .build()
+            );
         }
     }
 
