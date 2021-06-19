@@ -90,18 +90,23 @@ class DetailsRepository @Inject constructor(
             .zip(getStories(characterId, onComplete, onError)) { _, stories ->
                 characterDTO.stories = stories
             }.zip(getComics(characterId, onComplete, onError)) { _, comics ->
-            characterDTO.comics = comics
-        }.zip(getEvents(characterId, onComplete, onError)) { _, events ->
-            characterDTO.events = events
-        }.flowOn(Dispatchers.IO)
+                characterDTO.comics = comics
+            }.zip(getEvents(characterId, onComplete, onError)) { _, events ->
+                characterDTO.events = events
+            }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    fun getCharacterData(characterId: Int, onComplete: () -> Unit, onError: (String?) -> Unit) =
+    fun getCharacterData(
+        characterId: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String?) -> Unit
+    ) =
         flow {
             characterDTO.marvelCharacter = charactersDao.getCharacterData(characterId)
             getSeries(characterId, onComplete, onError).collect()
             Timber.d("Character DTO Values: ${characterDTO.toString()}")
             emit(characterDTO)
-        }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+        }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
 }

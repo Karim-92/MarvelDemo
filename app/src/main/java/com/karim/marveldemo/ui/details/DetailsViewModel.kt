@@ -22,9 +22,14 @@ class DetailsViewModel  @AssistedInject constructor(
 
     private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
+    @get:Bindable
+    var isLoading: Boolean by bindingProperty(false)
+        private set
+
     private var characterInfoFlow = characterIndex.flatMapLatest {
         detailRepository.getCharacterData(
             characterId = characterId,
+            onStart = {isLoading=true},
             onComplete = { isLoading = false },
             onError = {  Timber.d(" Error Message: $it" ) }
         )
@@ -33,9 +38,6 @@ class DetailsViewModel  @AssistedInject constructor(
     @get:Bindable
     val characterData: MarvelCharacterDTO? by characterInfoFlow.asBindingProperty(viewModelScope, null)
 
-    @get:Bindable
-    var isLoading: Boolean by bindingProperty(false)
-        private set
 
     @dagger.assisted.AssistedFactory
     interface AssistedFactory {
