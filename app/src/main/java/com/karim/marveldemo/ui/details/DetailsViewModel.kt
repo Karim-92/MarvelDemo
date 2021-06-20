@@ -20,13 +20,13 @@ class DetailsViewModel  @AssistedInject constructor(
     @Assisted private val characterId: Int
 ) : BindingViewModel() {
 
-    private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val characterDetails: MutableStateFlow<Int> = MutableStateFlow(0)
 
     @get:Bindable
     var isLoading: Boolean by bindingProperty(false)
         private set
 
-    private var characterInfoFlow = characterIndex.flatMapLatest {
+    private var characterInfoFlow = characterDetails.flatMapLatest {
         detailRepository.getCharacterData(
             characterId = characterId,
             onStart = {isLoading=true},

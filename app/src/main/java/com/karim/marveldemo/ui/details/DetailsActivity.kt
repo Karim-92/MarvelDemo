@@ -52,4 +52,8 @@ class DetailsActivity : BindingActivity<ActivityDetailsBinding>(R.layout.activit
                 TransformationCompat.startActivity(transformationLayout, intent)
             }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

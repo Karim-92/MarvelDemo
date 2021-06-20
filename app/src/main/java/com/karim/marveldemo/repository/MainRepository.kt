@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -25,27 +26,46 @@ class MainRepository @Inject constructor(
     fun getMarvelCharacters(
         page: Int,
         query: String?,
+        fromSearch: Boolean,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
     ) =
         flow {
-            var characters = if(query==null) charactersDao.getAllCharactersFromDb(page) else charactersDao.getQueryCharacters(query)
-            if (characters.isEmpty()) {
-                val response = if(query==null)characterClient.getRemoteMarvelCharacters(page = page) else characterClient.getRemoteMarvelCharacters(page = page, query)
+            if (fromSearch) {
+                val response = characterClient.getRemoteMarvelCharacters(
+                    page = page,
+                    query
+                )
                 response.suspendOnSuccess {
                     data.whatIfNotNull { response ->
-                        characters=response.data.results
-                        characters.forEach { character -> character.page = page }
-                        charactersDao.insertCharactersList(characters)
-                        emit(charactersDao.getAllCharactersList(page))
+                        Timber.d("Results from websearch: ${response.data.results}")
+                        emit(response.data.results)
                     }
                 }.onError {
                     map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
                 }.onException { onError(message) }
             } else {
-                emit(charactersDao.getAllCharactersList(page))
+                var characters =
+                    charactersDao.getAllCharactersFromDb(page)
+                if (characters.isEmpty()) {
+                    val response =
+                            characterClient.getRemoteMarvelCharacters(page = page)
+                    response.suspendOnSuccess {
+                        data.whatIfNotNull { response ->
+                            characters = response.data.results
+                            characters.forEach { character -> character.page = page }
+                            charactersDao.insertCharactersList(characters)
+                            emit(charactersDao.getAllCharactersList(page))
+                        }
+                    }.onError {
+                        map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
+                    }.onException { onError(message) }
+                } else {
+                    emit(charactersDao.getAllCharactersList(page))
+                }
             }
         }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
 
 }

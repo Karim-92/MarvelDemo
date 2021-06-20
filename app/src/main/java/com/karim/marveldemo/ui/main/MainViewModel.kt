@@ -10,9 +10,11 @@ import com.skydoves.bindables.BindingViewModel
 import com.skydoves.bindables.asBindingProperty
 import com.skydoves.bindables.bindingProperty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,29 +25,63 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BindingViewModel() {
 
-    private var queryString: String?=null
 
     @get:Bindable
     var isLoading: Boolean by bindingProperty(false)
         private set
 
+    @get:Bindable
+    var searchIndicator: Boolean = false
+
+    @get: Bindable
+    lateinit var searchResults: List<MarvelCharacter>
+
     private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
-    private var characterListFlow = characterIndex.flatMapLatest { page ->
+    private val characterListFlow = characterIndex.flatMapLatest { page ->
         mainRepository.getMarvelCharacters(
             page = page,
-            query = queryString,
+            query = null,
+            fromSearch = false,
             onStart = { isLoading = true },
             onComplete = { isLoading = false },
-            onError = { Timber.d(" Error Message: $it" ) }
+            onError = { Timber.d(" Error Message: $it") }
         )
     }
+
 
     @get:Bindable
     val characterData: List<MarvelCharacter> by characterListFlow.asBindingProperty(
         viewModelScope,
         emptyList()
     )
+
+    @FlowPreview
+    fun onQueryChanged(query: String) {
+        Timber.d("Entered onQueryChanged from ViewModel with query: $query")
+        viewModelScope.launch {
+            Timber.d("Search flow started.")
+            (mainRepository.getMarvelCharacters(
+                page = 0,
+                query = query,
+                fromSearch = true,
+                onStart = { isLoading = true },
+                onComplete = { isLoading = false },
+                onError = { Timber.d(" Error Message: $it") }
+            ).debounce(3000)
+                .distinctUntilChanged()
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    Timber.d("Search flow collected.")
+                    searchResults = emptyList()
+                    searchResults = it
+                    searchIndicator = true
+                    Timber.d("Search Results Value: $searchResults")
+                })
+            getNextCharacterList()
+        }
+        searchIndicator=false
+    }
 
     @get:Bindable
     var toastMessage: String? by bindingProperty(null)
@@ -62,10 +98,4 @@ class MainViewModel @Inject constructor(
             characterIndex.value++
         }
     }
-
-    fun onQuery(query: String): Boolean {
-//        TODO("Implement query fetching")
-        return true
-    }
-
 }

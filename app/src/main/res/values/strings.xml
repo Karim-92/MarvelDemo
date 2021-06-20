@@ -1,17 +1,12 @@
 <resources>
-    <string name="app_name">Marvel Demo</string>
+    <string name="app_name">MarvelWikia</string>
     <string name="marvel_background">marvel background</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="marvel_logo">marvel_logo</string>
     <string name="search">Search</string>
     <string name="character_image_placeholder">character image placeholder</string>
     <string name="character_name">Character Name</string>
-    <string name="character_parcelable">character</string>
-    <string name="trans_params">TransformationParams</string>
-    <string name="error_data_retrieval">An error has occurred while retrieving data.</string>
     <string name="description">Description</string>
-    <string name="dummy_description">Rick Jones has been Hulk\'s best bud since day one, but now he\'s more than a friend...he\'s a teammate! Transformed by a Gamma energy explosion, A-Bomb\'s thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction!</string>
+    <string name="dummy_description">Rick Jones has been Hulk\'s best bud since day one, but now he\'s more than a friend…he\'s a teammate! Transformed by a Gamma energy explosion, A-Bomb\'s thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction!</string>
     <string name="comics">Comics</string>
     <string name="events">Events</string>
     <string name="series">Series</string>
@@ -19,4 +14,5 @@
     <string name="search_characters">Search Characters</string>
     <string name="character_image">Character Image</string>
     <string name="description_empty">A description for this character has not been provided.</string>
+    <string name="clear_results">Clear Results</string>
 </resources>

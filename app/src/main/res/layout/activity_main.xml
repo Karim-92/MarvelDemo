@@ -63,7 +63,7 @@
             android:scrollbars="vertical"
             app:adapter="@{adapter}"
             app:paginationCharacterList="@{vm}"
-            app:characterList="@{vm.characterData}"
+            app:characterList="@{vm.searchIndicator ? vm.searchResults : vm.characterData}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,12 +84,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabClearResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:contentDescription="@string/clear_results"
+            android:src="@drawable/ic_clear_results"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <br.com.mauker.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="@color/colorPrimary"
-            app:searchBackground="@color/colorPrimary" />
+            app:searchBackground="@color/colorPrimary" >
+
+        </br.com.mauker.materialsearchview.MaterialSearchView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

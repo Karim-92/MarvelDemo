@@ -3,6 +3,7 @@ package com.karim.marveldemo.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import br.com.mauker.materialsearchview.MaterialSearchView
 import com.karim.marveldemo.R
@@ -11,14 +12,17 @@ import com.karim.marveldemo.ui.adapters.MainRecyclerAdapter
 import com.skydoves.bindables.BindingActivity
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    val viewModel: MainViewModel by viewModels()
-    val searchView: MaterialSearchView by lazy {
+    private val mainRecyclerAdapter = MainRecyclerAdapter()
+    private val viewModel: MainViewModel by viewModels()
+    private val searchView by lazy {
         binding.searchView
+    }
+    private val fabClearResultsBtn by lazy {
+        binding.fabClearResults
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,24 +33,30 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         binding {
             lifecycleOwner = this@MainActivity
-            adapter = MainRecyclerAdapter()
+            adapter = mainRecyclerAdapter
             vm = viewModel
         }
 
         searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                Timber.d("Query Submitted")
+                viewModel.onQueryChanged(query)
                 searchView.closeSearch()
-                return viewModel.onQuery(query)
+                fabClearResultsBtn.visibility = View.VISIBLE
+                return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                Timber.d("Query Changed")
-//                viewModel.onQuery(newText)
                 return true
             }
         })
+        fabClearResultsBtn.setOnClickListener {
+            // Reset the recyclerview to the original list
+            mainRecyclerAdapter.submitList(viewModel.characterData)
+            mainRecyclerAdapter.notifyDataSetChanged()
+            fabClearResultsBtn.visibility=View.INVISIBLE
+        }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
@@ -65,7 +75,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onBackPressed() {
         if (searchView.isOpen) {
-            // Close the search on the back button press.
+            searchView.clearAll()
             searchView.closeSearch()
         } else {
             super.onBackPressed()
