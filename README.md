@@ -1,8 +1,7 @@
 <p align="center">  
 MarvelWikia is a demo application Utilizing the MVVM + Kotlin + Flows + Room + Hilt.<br>
-It  fetches data using the MarvelAPI and displays the list of marvel characters. With the functionality to tap on a character and
-get a list of all the comics, events, series and stories he/she/it was in. Also the user can search for their favorite characters with a simple search function.
-The application supports pagination as well, so the user may scroll and get new characters for every new page.</p>
+
+It  fetches data using the MarvelAPI and displays the list of marvel characters. With the functionality to tap on a character and get a list of all the comics, events, series and stories he/she/it was in. Also the user can search for their favorite characters with a simple search function. The application supports pagination as well, so the user may scroll and get new characters for every new page.</p>
 </br>
 
 ## Application MAD Score cards
