@@ -1,6 +1,6 @@
 package com.karim.marveldemo.network
 
-import com.karim.marveldemo.PUB_API_KEY
+import com.karim.marveldemo.BuildConfig.PUB_API_KEY
 import com.karim.marveldemo.data.GenericResponse
 import com.karim.marveldemo.data.MarvelResponse
 import com.skydoves.sandwich.ApiResponse

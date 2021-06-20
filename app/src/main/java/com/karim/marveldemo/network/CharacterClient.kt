@@ -1,7 +1,6 @@
 package com.karim.marveldemo.network
 
-import com.karim.marveldemo.PRIV_API_KEY
-import com.karim.marveldemo.PUB_API_KEY
+import com.karim.marveldemo.BuildConfig
 import com.karim.marveldemo.data.GenericResponse
 import com.karim.marveldemo.data.MarvelResponse
 import com.skydoves.sandwich.ApiResponse
@@ -13,15 +12,16 @@ class CharacterClient @Inject constructor(
     private val characterService: CharacterService
 ) {
     private val time: String = System.currentTimeMillis().toString()
-    private val input: String = System.currentTimeMillis().toString() + PRIV_API_KEY + PUB_API_KEY
+    private val input: String =
+        System.currentTimeMillis().toString() + BuildConfig.PRIV_API_KEY + BuildConfig.PUB_API_KEY
 
     suspend fun getRemoteMarvelCharacters(
         page: Int,
-        query: String?=null
+        query: String? = null
     ): ApiResponse<MarvelResponse> = characterService.getRemoteCharacters(
         limit = PAGING_SIZE,
         offset = page * PAGING_SIZE,
-        nameString=query,
+        nameString = query,
         timeStamp = time,
         hash = getHash(input)
     )

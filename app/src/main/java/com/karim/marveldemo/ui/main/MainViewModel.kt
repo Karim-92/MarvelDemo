@@ -38,6 +38,8 @@ class MainViewModel @Inject constructor(
 
     private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
+
+    // TODO: Refactor into a function, invoke in the init().. Bindables isn't that versatile of a library after all.
     private val characterListFlow = characterIndex.flatMapLatest { page ->
         mainRepository.getMarvelCharacters(
             page = page,
