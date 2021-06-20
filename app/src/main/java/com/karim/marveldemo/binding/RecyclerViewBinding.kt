@@ -42,7 +42,7 @@ object RecyclerViewBinding {
                     .setMinScale(0.8f)
                     .setPivotX(Pivot.X.LEFT)
                     .build()
-            );
+            )
         }
     }
 

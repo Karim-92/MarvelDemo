@@ -12,7 +12,6 @@ import com.skydoves.sandwich.suspendOnSuccess
 import com.skydoves.whatif.whatIfNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class DetailsRepository @Inject constructor(
@@ -30,7 +29,6 @@ class DetailsRepository @Inject constructor(
             response.suspendOnSuccess {
                 data.whatIfNotNull { response ->
                     characterDTO.comics = response.data.results
-                    Timber.d("Comics value: ${response.data.results}")
                     emit(characterDTO.comics)
                 }
             }
@@ -105,7 +103,6 @@ class DetailsRepository @Inject constructor(
         flow {
             characterDTO.marvelCharacter = charactersDao.getCharacterData(characterId)
             getSeries(characterId, onComplete, onError).collect()
-            Timber.d("Character DTO Values: ${characterDTO.toString()}")
             emit(characterDTO)
         }.onStart{ onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
