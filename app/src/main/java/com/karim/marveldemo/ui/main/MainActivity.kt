@@ -12,7 +12,11 @@ import com.karim.marveldemo.ui.adapters.MainRecyclerAdapter
 import com.skydoves.bindables.BindingActivity
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
@@ -51,6 +55,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         })
         fabClearResultsBtn.setOnClickListener {
             // Reset the recyclerview to the original list
+            viewModel.resetViewModel()
             mainRecyclerAdapter.submitList(viewModel.characterData)
             mainRecyclerAdapter.notifyDataSetChanged()
             fabClearResultsBtn.visibility=View.INVISIBLE

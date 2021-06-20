@@ -36,10 +36,8 @@ class MainViewModel @Inject constructor(
     @get: Bindable
     lateinit var searchResults: List<MarvelCharacter>
 
-    private val characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
+    private var characterIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
-
-    // TODO: Refactor into a function, invoke in the init().. Bindables isn't that versatile of a library after all.
     private val characterListFlow = characterIndex.flatMapLatest { page ->
         mainRepository.getMarvelCharacters(
             page = page,
@@ -82,22 +80,21 @@ class MainViewModel @Inject constructor(
                 })
             getNextCharacterList()
         }
-        searchIndicator=false
     }
 
     @get:Bindable
     var toastMessage: String? by bindingProperty(null)
         private set
 
-
-    init {
-        Timber.d("init MainViewModel")
-    }
-
     @MainThread
     fun getNextCharacterList() {
         if (!isLoading) {
             characterIndex.value++
         }
+    }
+
+    fun resetViewModel(){
+        searchIndicator=false
+        getNextCharacterList()
     }
 }
