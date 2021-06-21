@@ -2,6 +2,7 @@ package com.karim.marveldemo.hiltdi
 
 import android.app.Application
 import androidx.room.Room
+import com.karim.marveldemo.CHARACTERS_DB
 import com.karim.marveldemo.persistence.CharactersDao
 import com.karim.marveldemo.persistence.CharactersDb
 import com.karim.marveldemo.persistence.MarvelTypeConverters
@@ -33,7 +34,7 @@ object PersistenceModule {
         typeConverters: MarvelTypeConverters
     ): CharactersDb {
         return Room
-            .databaseBuilder(application, CharactersDb::class.java, "Pokedex.db")
+            .databaseBuilder(application, CharactersDb::class.java, CHARACTERS_DB)
             .fallbackToDestructiveMigration()
             .addTypeConverter(typeConverters)
             .build()
